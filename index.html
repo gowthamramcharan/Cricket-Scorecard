@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+          font-family: Arial, Helvetica, sans-serif;
+          background-color: #f1f5f9;
+        }
+        .navbar{
+          width: 100%;
+          background-color: #1a2938;
+          color: white;
+          font-size: 50px;
+        }
+        .dd{
+            display: flex;
+            gap:40px
+        }
+      .d1{
+        width:100px;
+        height: 100px;
+        position: relative;
+        display: flex;
+      }
+      .d2{
+        position: absolute;
+      }
+      .d3{
+        position: relative;
+        width: 100px;
+        display: flex;
+      }
+      .d4{
+        position: absolute;
+        top: 0px;
+      }
+      button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+     button{
+      border-radius: 5px;
+      padding: 4px 8px;
+      border: none;
+     }
+     #bat {
+     position: absolute;
+     top: 160px;
+     transition: left 0.3s ease;
+     width: 25px;
+     
+}
+
+    </style>
+</head>
+<body>
+  <div class="navbar"><b>Cricket</b></div>
+    <h1>Score: <span id="total"></span></h1>
+    <div class="dd">
+      <div class="d1"> <img src="MSD.png" width="100px">
+      </div>
+    <img src="bat.png"  id="bat">
+    <img src="virat.png" width="100px" class="b2">
+    <div class="d3"><img src="starc.png" width="100px"><div class="d4"><img src="ball.jpg" width="20px"></div></div></div>
+    <h3><b>Over 1:</b><span id="score"> </span></h3>
+    <button onclick="sdot()" style="background-color:#6c757d; color: white;">DOT</button>
+    <button onclick="s1()" style="background-color:#a5c523; ">1</button>
+    <button onclick="s2()" style="background-color:#17a2b8; color:white;">2</button>
+    <button onclick="s3()" style="background-color:#ffc107; color:black;">3</button>
+    <button onclick="s4()" style="background-color:#15c4eb; color:white;">4</button>
+    <button onclick="s5()" style="background-color:#a049f1; color:white;">5</button>
+    <button onclick="s6()" style="background-color:#03f027; color:rgb(12, 1, 1);">6</button>
+    <button onclick="sw()" style="background-color:#ef1c1c; color:white;">W</button>
+    <button onclick="swide()" style="background-color:#09e9c7; color:#1a2938;">Wide</button>
+    <button onclick="snoball()" style="background-color:#e83e8c; color:white;">No ball</button>
+    <button onclick="resetGame()" style="background-color:#343a40; color:white;">Reset</button>
+
+
+    <script>
+          var scorecard=document.getElementById("score");
+          var totalscore=document.getElementById("total")
+          var runs=0;
+          var wickets=0;
+          var ballcount=0;
+          var over=1;
+          var total=0;
+          var striker=1;
+          var bat=document.getElementById("bat")
+          moveBat();
+          function moveBat(){
+            if(striker === 1){
+            bat.style.left = "10px";   
+            } else {
+             bat.style.left = "150px";  
+            }
+          }
+          function changestrike(){
+            if(striker === 1){
+            striker = 2;
+            } else {
+            striker = 1;
+               }
+           moveBat();   
+          }
+
+          
+           function updatescore(){
+            totalscore.innerText=runs+ "/" +wickets
+           }
+           updatescore()
+
+           function checkover(){
+              ballcount++;
+              if(ballcount%6==0){
+                over++;
+                scorecard.innerHTML +=" = "+total+"<br><b>Over "+over+":</b>";
+                total=0;
+                changestrike();
+              }
+           }
+
+           function gameover(){
+            if(wickets >= 10){
+            alert("Game Over!");
+            return true;
+           }
+          return false;
+         }
+
+
+           function sdot(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" .";
+            runs=runs+0;
+            updatescore()
+            checkover()
+           }
+
+           function s1(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" 1";
+            runs=runs+1;
+            total +=1;
+            updatescore()
+            changestrike();
+            checkover()
+           }
+
+           function s2(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" 2";
+            runs=runs+2;
+            total +=2;
+            updatescore()
+            checkover()
+           }
+
+           function s3(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" 3";
+            runs=runs+3;
+            total +=3;
+            updatescore()
+            changestrike();
+            checkover()
+           }
+
+           function s4(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" 4";
+            runs=runs+4;
+            total +=4;
+            updatescore()
+            checkover()
+             
+           }
+
+           function s5(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" 5";
+            runs=runs+5;
+            total +=5;
+            updatescore()
+            changestrike();
+            checkover()
+           }
+
+           function s6(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" 6" ;
+            runs=runs+6;
+            total +=6;
+            updatescore()
+            checkover()
+
+           }
+
+           function sw(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" W";
+            wickets=wickets+1;
+            updatescore()
+            checkover()
+           }
+
+           function swide(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" Wide";
+            runs=runs+1;
+            total +=1;
+            updatescore()
+           }
+
+           function snoball(){
+            if(gameover()) return;
+            scorecard.innerHTML +=" nb";
+            runs=runs+1;
+            total +=1;
+            updatescore()
+           }
+           function resetGame(){
+            runs = 0;
+            wickets = 0;
+            ballcount = 0;
+            over = 1;
+            total = 0;
+            striker = 1;
+            scorecard.innerHTML = "";
+            totalscore.innerText = "0/0";
+            moveBat();
+          }
+
+           
+
+    </script>
+</body>
+</html>
+
